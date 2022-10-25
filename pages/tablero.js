@@ -1,6 +1,7 @@
 import Layout from "../components/Layout";
 import Board from "react-trello";
 import React, { Component } from "react";
+import Link from "next/link";
 
 export default function Tablero({ data }) {
   const [showModal, setShowModal] = React.useState(false);
@@ -23,7 +24,7 @@ export default function Tablero({ data }) {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+            <div className="relative w-1/2 my-6 mx-auto max-w-3xl">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -146,40 +147,33 @@ export default function Tablero({ data }) {
                     Cerrar
                   </button>
                   {dataModal.laneId === "prospectos" ? (
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Contactar
-                    </button>
+                    <Link href="/contactar">
+                      <button
+                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(false)}
+                      >
+                        Contactar
+                      </button>
+                    </Link>
                   ) : (
                     ""
                   )}
                   {dataModal.laneId === "contactos" ? (
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Ver detalles
-                    </button>
+                    <Link href="/detalles">
+                      <button
+                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                        type="button"
+                        onClick={() => setShowModal(false)}
+                      >
+                        Ver detalles
+                      </button>
+                    </Link>
                   ) : (
                     ""
                   )}
                   {dataModal.laneId === "clientes" ? (
-                    <button
-                      className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                      type="button"
-                      onClick={() => setShowModal(false)}
-                    >
-                      Ver pedidos
-                    </button>
-                  ) : (
-                    ""
-                  )}
-                  {dataModal.laneId === "frecuentes" ? (
-                    <>
+                    <Link href="/pedidos">
                       <button
                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
@@ -187,6 +181,21 @@ export default function Tablero({ data }) {
                       >
                         Ver pedidos
                       </button>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+                  {dataModal.laneId === "frecuentes" ? (
+                    <>
+                      <Link href="/pedidos">
+                        <button
+                          className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          type="button"
+                          onClick={() => setShowModal(false)}
+                        >
+                          Ver pedidos
+                        </button>
+                      </Link>
                       <button
                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
@@ -313,7 +322,9 @@ export async function getServerSideProps(context) {
   let listFrecuentes = [];
   let tags;
   // Prospectos y Contactados
-  const prospectos = await fetch(`http://localhost:3010/api/prospectos/`);
+  const prospectos = await fetch(
+    `https://chat-bot-topicos.herokuapp.com/api/prospectos/`
+  );
   const datas = await prospectos.json();
   const body = datas.body;
   body.forEach((element) => {
@@ -366,7 +377,9 @@ export async function getServerSideProps(context) {
   );
 
   // Clientes y Clientes frecuentes
-  const clientes = await fetch(`http://localhost:3010/api/clientes/`);
+  const clientes = await fetch(
+    `https://chat-bot-topicos.herokuapp.com/api/clientes/`
+  );
   const datas2 = await clientes.json();
   const body2 = datas2.body;
   body2.forEach((element) => {
