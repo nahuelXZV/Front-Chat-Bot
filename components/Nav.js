@@ -20,8 +20,8 @@ export default function Nav() {
     <header className="flex-shrink-0 border-b-2 bg-white p-1">
       <div className="flex items-center justify-between p-2">
         {/* Navbar left */}
-        <div className="flex items-center space-x-3">
-          <Link href="/">
+        <div className="flex items-center">
+          <Link href="/" className="lg:hidden">
             <a className="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">
               Veterinaria
             </a>

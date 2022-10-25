@@ -12,6 +12,7 @@ export default function Tablero({ data }) {
         data={data}
         draggable={false}
         cardDraggable={true}
+        laneDraggable={false}
         onCardClick={(cardId, metadata, laneId) => {
           setDataModal({
             ...metadata,
@@ -431,7 +432,7 @@ export async function getServerSideProps(context) {
   });
   dataTablero.lanes.push(createPanel("clientes", "Clientes", listClientes));
   dataTablero.lanes.push(
-    createPanel("frecuentes", "Frecuentes", listFrecuentes)
+    createPanel("frecuentes", "Clientes frecuentes", listFrecuentes)
   );
   return {
     props: {
