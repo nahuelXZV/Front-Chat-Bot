@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Card({ title, facebookId, data = [], tags, image }) {
+export default function Card({ id, title, facebookId, data = [], tags, image }) {
   return (
     <>
       <div class="mb-2 shadow-lg rounded-xl w-72 md:w-80 p-3 bg-white relative overflow-hidden">

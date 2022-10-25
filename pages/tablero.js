@@ -17,7 +17,7 @@ export default function Tablero({ data }) {
         data={data}
         components={components}
         draggable={false}
-        cardDraggable={false}
+        cardDraggable={true}
         laneDraggable={false}
         onCardClick={(cardId, metadata, laneId) => {
           setDataModal({
@@ -323,6 +323,7 @@ function cardData(
   imagen = "https://picsum.photos/200/300"
 ) {
   let cardData = {
+    id: id,
     title: title,
     facebookId: id,
     data: formatoDescripcion(dataCard, type),
