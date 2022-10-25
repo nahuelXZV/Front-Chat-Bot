@@ -2,14 +2,20 @@ import Layout from "../components/Layout";
 import Board from "react-trello";
 import React, { Component } from "react";
 import Link from "next/link";
+import Card from "../components/Card";
 
 export default function Tablero({ data }) {
   const [showModal, setShowModal] = React.useState(false);
   const [dataModal, setDataModal] = React.useState({});
+
+  const components = {
+    Card: Card,
+  };
   return (
     <Layout title="Tablero">
       <Board
         data={data}
+        components={components}
         draggable={false}
         cardDraggable={true}
         laneDraggable={false}
@@ -222,82 +228,107 @@ export default function Tablero({ data }) {
 function formatoDescripcion(data, type) {
   switch (type) {
     case "prospecto":
-      let descripcion =
-        "Link Facebook: " +
-        data.prospecto.facebookId +
-        "\n" +
-        "Ult. Vez: " +
-        data.ultimoIngreso?.fecha;
+      let descripcion = [
+        {
+          key: "Link Facebook",
+          value: data.prospecto.facebookId ? data.prospecto.facebookId : "",
+        },
+        {
+          key: "Ult. Vez",
+          value: data.ultimoIngreso?.fecha ? data.ultimoIngreso?.fecha : "",
+        },
+      ];
       return descripcion;
       break;
     case "contacto":
-      let descripcionContacto =
-        "Correo: " +
-        data.prospecto.correo +
-        "\n" +
-        "Link Facebook: " +
-        data.prospecto.facebookId +
-        "\n" +
-        "Ult. Vez: " +
-        data.ultimoIngreso?.fecha +
-        "\n" +
-        "Ult. Contacto: " +
-        data.ultimoContacto?.fecha +
-        "\n" +
-        "Medio de comunicacion: " +
-        data.ultimoContacto?.tipoComunicacion;
+      let descripcionContacto = [
+        {
+          key: "Correo",
+          value: data.prospecto.correo ? data.prospecto.correo : "",
+        },
+        {
+          key: "Ult. Vez",
+          value: data.ultimoIngreso?.fecha ? data.ultimoIngreso?.fecha : "",
+        },
+        {
+          key: "Ult. Contacto",
+          value: data.ultimoContacto?.fecha ? data.ultimoContacto?.fecha : "",
+        },
+        {
+          key: "Medio de comunicacion",
+          value: data.ultimoContacto?.tipoComunicacion
+            ? data.ultimoContacto?.tipoComunicacion
+            : "",
+        },
+      ];
       return descripcionContacto;
       break;
     case "cliente":
-      let descripcionCliente =
-        "Correo: " +
-        data.cliente.correo +
-        "\n" +
-        "Telefono: " +
-        data.cliente.telefono +
-        "\n" +
-        "Link Facebook: " +
-        data.cliente.facebookId +
-        "\n" +
-        "Ult. Pedido: " +
-        data.ultimoPedido?.fecha +
-        "\n" +
-        "Monto Ult. Pedido: " +
-        data.ultimoPedido?.montoTotal +
-        " Bs";
+      let descripcionCliente = [
+        {
+          key: "Correo",
+          value: data.cliente.correo ? data.cliente.correo : "",
+        },
+        {
+          key: "Telefono",
+          value: data.cliente.telefono ? data.cliente.telefono : "",
+        },
+        {
+          key: "Ult. Pedido",
+          value: data.ultimoPedido?.fecha ? data.ultimoPedido?.fecha : "",
+        },
+        {
+          key: "Monto Ult. Pedido",
+          value: data.ultimoPedido?.montoTotal
+            ? data.ultimoPedido?.montoTotal
+            : "",
+        },
+      ];
       return descripcionCliente;
       break;
     default:
-      let clienteFrecuente =
-        "Correo: " +
-        data.cliente.correo +
-        "\n" +
-        "Telefono: " +
-        data.cliente.telefono +
-        "\n" +
-        "Frecuencia de pedidos: " +
-        data.frecuencia +
-        "\n" +
-        "Ult. Pedido: " +
-        data.ultimoPedido?.fecha +
-        "\n" +
-        "Promedio de compra: " +
-        data.promedioCompra +
-        " Bs";
+      let clienteFrecuente = [
+        {
+          key: "Correo",
+          value: data.cliente.correo ? data.cliente.correo : "",
+        },
+        {
+          key: "Telefono",
+          value: data.cliente.telefono ? data.cliente.telefono : "",
+        },
+        {
+          key: "Frecuencia de pedidos",
+          value: data.frecuencia ? data.frecuencia : "",
+        },
+        {
+          key: "Ult. Pedido",
+          value: data.ultimoPedido?.fecha ? data.ultimoPedido?.fecha : "",
+        },
+        {
+          key: "Promedio de compra",
+          value: data.promedioCompra ? data.promedioCompra : "",
+        },
+      ];
       return clienteFrecuente;
       break;
   }
 }
 
-function cardData(id, title, dataCard, tags, type) {
+function cardData(
+  id = "null",
+  title,
+  dataCard,
+  tags,
+  type,
+  imagen = "https://picsum.photos/200/300"
+) {
   let cardData = {
     id: id,
     title: title,
-    description: formatoDescripcion(dataCard, type),
-    label: dataCard.ultimoIngreso
-      ? dataCard.ultimoIngreso.fecha.slice(0, 10)
-      : type,
+    facebookId: id,
+    data: formatoDescripcion(dataCard, type),
     tags: tags,
+    image: imagen,
     metadata: dataCard,
   };
   return cardData;
@@ -332,40 +363,42 @@ export async function getServerSideProps(context) {
     if (element.contactos == 0) {
       tags = [
         {
-          bgcolor: "#0079BF",
-          color: "white",
+          bgcolor: "blue",
+          color: "blue",
           title: "Ingresos: " + element.ingresos,
         },
       ];
       listProspectos.push(
         cardData(
-          element.prospecto?._id,
+          element.prospecto?.facebookId,
           element.prospecto?.nombre,
           element,
           tags,
-          "prospecto"
+          "prospecto",
+          element.prospecto?.foto
         )
       );
     } else {
       tags = [
         {
-          bgcolor: "#0079BF",
-          color: "white",
+          bgcolor: "blue",
+          color: "blue",
           title: "Ingresos: " + element.ingresos,
         },
         {
-          bgcolor: "#7c3aed",
-          color: "white",
+          bgcolor: "yellow",
+          color: "yellow",
           title: "Contactos: " + element.contactos,
         },
       ];
       listContactos.push(
         cardData(
-          element.prospecto?._id,
+          element.prospecto?.facebookId,
           element.prospecto?.nombre,
           element,
           tags,
-          "contacto"
+          "contacto",
+          element.prospecto?.foto
         )
       );
     }
@@ -387,45 +420,47 @@ export async function getServerSideProps(context) {
     if (element.cliente.tipo != "frecuente") {
       tags = [
         {
-          bgcolor: "#0079BF",
-          color: "white",
+          bgcolor: "blue",
+          color: "blue",
           title: "Ingresos: " + element.ingresos,
         },
         {
-          bgcolor: "#7c3aed",
-          color: "white",
+          bgcolor: "yellow",
+          color: "yellow",
           title: "Pedidos: " + element.pedidos,
         },
       ];
       listClientes.push(
         cardData(
-          element.cliente?._id,
+          element.prospecto?.facebookId,
           element.cliente?.nombre,
           element,
           tags,
-          "cliente"
+          "cliente",
+          element.prospecto?.foto
         )
       );
     } else {
       tags = [
         {
           bgcolor: "#0079BF",
-          color: "white",
+          color: "blue",
           title: "Notificaciones: " + element.notificaciones,
         },
         {
-          bgcolor: "#7c3aed",
-          color: "white",
+          bgcolor: "yellow",
+          color: "yellow",
           title: "Pedidos: " + element.pedidos,
         },
       ];
       listFrecuentes.push(
         cardData(
-          element.cliente?._id,
+          element.prospecto?.facebookId,
           element.cliente?.nombre,
           element,
           tags,
-          "frecuente"
+          "frecuente",
+          element.prospecto?.foto
         )
       );
     }
