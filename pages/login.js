@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 import styles from "../styles/style_login.module.css";
 import Layout from "../components/Layout_Login";
 
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+=======
+import styles from "../styles/Home.module.css";
+import Layout from "../components/Layout";
+>>>>>>> 8e11834518abbc5a9e913d173fbfdfbd617045c8
 
 export default function Login() {
   //const login = () => {
