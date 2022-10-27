@@ -19,7 +19,7 @@ export default function Card({
     return (
         <>
             <div class="mb-2 shadow-lg rounded-xl w-72 md:w-80 p-3 bg-white relative overflow-hidden">
-                <a class="w-full h-full block">
+                <a class="w-full h-full block text-black">
                     <div class="flex items-center border-b-2 mb-2 py-2">
                         <Image
                             src={image}
@@ -28,9 +28,9 @@ export default function Card({
                             height={40}
                             className="w-10 h-10 object-cover rounded-full"
                         />
-                        <div class="pl-3">
-                            <div class="font-medium text-black">{title}</div>
-                            <div class="text-gray-600 text-sm">FacebookId: {facebookId}</div>
+                        <div class="pl-3 text-black">
+                            <div class="font-medium">{title}</div>
+                            <div class="text-gray-600 text-sm ">FacebookId: {facebookId}</div>
                         </div>
                     </div>
                     <div class="w-full mb-3">
@@ -96,7 +96,7 @@ export default function Card({
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     {/* imagen redonda pequena */}
                                     <img src={image} className="rounded-full w-10 h-10 mr-3" />
-                                    <div class="pl-3">
+                                    <div class="pl-3 text-black">
                                         <div class="font-medium">{title}</div>
                                         <div class="text-gray-600 text-sm">
                                             FacebookId: {facebookId}

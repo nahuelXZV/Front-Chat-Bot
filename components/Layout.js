@@ -3,6 +3,7 @@ import Aside from "./Aside";
 import Head from "next/head";
 
 export default function Layout({ children, title }) {
+  /* https://flatuicolors.com/palette/au */
   return (
     <>
       <Head>

@@ -10,7 +10,7 @@ export default function Detalles({ data }) {
         <Layout title="Pedidos">
             <div className={styles.container}>
                 {/* titulo  */}
-                <div className="flex flex-row  items-center mb-4 mt-4">
+                <div className="flex flex-row items-center mb-4 mt-4">
                     {/* Link de volver */}
                     <Link href="/tablero">
                         <button
@@ -28,38 +28,42 @@ export default function Detalles({ data }) {
                 <div class='flex flex-col items-center justify-center'>
                     {
                         pedidos.map((pedido, index) => {
-                            return <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-4">
-                                <div class="flex w-full items-center justify-between border-b pb-3">
-                                    <div class="flex flex-col items-start">
-                                        <div class="text-lg font-bold text-slate-700">Monto Total: {pedido.pedido.montoTotal} Bs</div>
-                                        <div class="text-sm text-gray-500">Codigo: {pedido.pedido._id}</div>
+                            return (
+                                <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-2">
+                                    <div class="flex w-full items-center justify-between border-b pb-3">
+                                        <div class="flex flex-col items-start">
+                                            <div class="text-lg font-bold text-slate-700">Monto Total: {pedido.pedido.montoTotal} Bs</div>
+                                            <div class="text-sm text-gray-500">Codigo: {pedido.pedido._id}</div>
+                                        </div>
+                                        <div class="flex items-center space-x-8">
+                                            <div class="text-xs text-neutral-500 text-black ">{pedido.pedido.fecha}</div>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center space-x-8">
-                                        <div class="text-xs text-neutral-500 text-black ">{pedido.pedido.fecha}</div>
-                                    </div>
-                                </div>
-                                <div class="mt-4 mb-6">
-                                    <div class="mb-3 text-xl font-bold">{/* {dat.empleadoId?.nombre} */}</div>
-                                    {
-                                        pedido.detalles?.map((detalle, index) => {
-                                            return <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer mb-2">
-                                                <div class="mr-4"><div class="h-9 w-9 rounded-sm flex items-center justify-center text-3xl" >
-                                                    <Image src={detalle.pizzaId?.imagen} alt="Picture of the author" width={50} height={50} />
-                                                </div>
-                                                </div>
-                                                <div>
-                                                    <div class="font-bold text-lg">{detalle.pizzaId.nombre}</div>
-                                                    <div class="text-xs text-gray-500">
-                                                        <span class="mr-2">Tamaño: {detalle.pizzaId.tamano}</span>
-                                                        <span class="mr-2">Precio: {detalle.pizzaId.precio}</span>
-                                                        <span class="mr-2">Cantidad: {detalle.cantidad}</span>
+                                    <div class="mt-4 mb-6">
+                                        <div class="mb-3 text-xl font-bold">{/* {dat.empleadoId?.nombre} */}</div>
+                                        {
+                                            pedido.detalles?.map((detalle, index) => {
+                                                return (
+                                                    <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer mb-2">
+                                                        <div class="mr-4"><div class="h-9 w-9 rounded-sm flex items-center justify-center text-3xl" >
+                                                            <Image src={detalle.pizzaId?.imagen} alt="Picture of the author" width={50} height={50} />
+                                                        </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="font-bold text-lg">{detalle.pizzaId.nombre}</div>
+                                                            <div class="text-xs text-gray-500">
+                                                                <span class="mr-2">Tamaño: {detalle.pizzaId.tamano}</span>
+                                                                <span class="mr-2">Precio: {detalle.pizzaId.precio}</span>
+                                                                <span class="mr-2">Cantidad: {detalle.cantidad}</span>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        })
-                                    }
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            )
                         })
                     }
                 </div>

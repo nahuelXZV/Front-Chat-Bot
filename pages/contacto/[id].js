@@ -57,7 +57,6 @@ export default function Detalles({ data }) {
     );
 }
 
-
 export async function getServerSideProps(context) {
     const { id } = context.query;
     const url = "https://chat-bot-topicos.herokuapp.com/api/prospectos/contacto/" + id;

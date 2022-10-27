@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import react from "react";
 
 export default function FormContacto({ data }) {
     async function save(data) {
@@ -15,8 +16,8 @@ export default function FormContacto({ data }) {
             alert("Todos los campos son obligatorios");
             return;
         }
-        const url = "http://localhost:3010/api/prospectos/contacto";
-        const token = "keyw3fjK3q3q8XsW2";
+        const url = "https://chat-bot-topicos.herokuapp.com/api/prospectos/contacto";
+        // const token = "keyw3fjK3q3q8XsW2";
         const headers = {
             // Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -45,6 +46,8 @@ export default function FormContacto({ data }) {
         document.getElementById("medio").value = "";
         document.getElementById("fecha").value = "";
         document.getElementById("descripcion").value = "";
+        // redireccionar al tablero
+        window.location.href = "/tablero";
     }
 
     return (
@@ -54,7 +57,7 @@ export default function FormContacto({ data }) {
                 {/* formulario de contacto */}
                 <div className="flex flex-col w-full mb-2">
                     <div className="flex flex-row w-full mb-4">
-                        <div className="flex flex-col w-full mr-8">
+                        <div className="flex flex-col w-full mr-8 text-black">
                             <label className="mb-2 uppercase font-bold text-lg text-gray-600">
                                 Medio de comunicación
                             </label>
@@ -63,10 +66,10 @@ export default function FormContacto({ data }) {
                                 <select
                                     className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                                     id="medio">
-                                    <option selected disabled>
+                                    <option disabled>
                                         Selecciona un medio de comunicación
                                     </option>
-                                    <option>Facebook</option>
+                                    <option selected>Facebook</option>
                                     <option>Whatsapp</option>
                                     <option>Correo</option>
                                     <option>Telefono</option>
@@ -78,7 +81,7 @@ export default function FormContacto({ data }) {
                             <label className="mb-2 uppercase font-bold text-lg text-gray-600">
                                 Fecha
                             </label>
-                            <input id="fecha"
+                            <input id="fecha" value={new Date().getDate()}
                                 className="border py-2 px-3 text-gray-700 mb-3"
                                 type="date" />
                         </div>
