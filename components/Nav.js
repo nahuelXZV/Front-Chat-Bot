@@ -23,7 +23,7 @@ export default function Nav() {
         <div className="flex items-center space-x-3">
           <Link href="/">
             <a className="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">
-              Veterinaria
+              Pizzaria
             </a>
           </Link>
           <button

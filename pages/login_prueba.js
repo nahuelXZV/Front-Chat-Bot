@@ -2,23 +2,12 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import styles from "../styles/style_login.module.css";
 import Layout from "../components/Layout_Login";
-import script from "../script"
 
 export default function Login() {  
   const [errorMessages, setErrorMessages] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // User Login info
-  const database = [
-    {
-      username: "user1",
-      password: "pass1"
-    },
-    {
-      username: "user2",
-      password: "pass2"
-    }
-  ];
+  // User Login info  
 
   const errors = {
     uname: "invalid username",
@@ -61,8 +50,8 @@ export default function Login() {
     <div className={styles.form}>
       <form id="cuenta_login"> 
         <div className={styles.inputContainer}>
-          <label for="user"> Usuario </label>                      
-          <input id="user" type="text" name="uname" required className={styles.inputText}/>
+          <label for="username"> Usuario </label>                      
+          <input id="username" type="text" name="uname" required className={styles.inputText}/>
           
         </div>
         <div className={styles.inputContainer}>
@@ -78,15 +67,28 @@ export default function Login() {
     </div>
   );
 //{isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+//<script src={script}></script>
+
   return (
       <Layout title="login_prueba">
         <div className={styles.app}>
         <div className={styles.loginForm}>
           <div className={styles.title}>Iniciar Sesion</div>
-          {renderForm}
+          {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
         </div>
-      </div>
-      <script src={script}></script>
+      </div>      
       </Layout>      
     );
 }
+/* #funcion
+export async function getServerSideProps(context) {
+  let username = document.getElementById("username");
+  let password = document.getElementById("password");
+  let sesion = { username: username, password: password};
+  let sesionJSON = JSON.stringify(sesion);
+  const database = await fetch('http://localhost:3010/api/auth/login/', {
+    method: 'Post',
+    body: sesionJSON
+  })
+}
+end funcion*/
