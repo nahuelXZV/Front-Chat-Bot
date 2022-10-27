@@ -11,7 +11,7 @@ export default function Layout({ children, title }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen overflow-y-hidden bg-white">
+      <div className="flex h-screen overflow-y-hidden bg-fondo">
         <Aside />
         <div className="flex flex-col flex-1 h-full overflow-hidden">
           <Nav />

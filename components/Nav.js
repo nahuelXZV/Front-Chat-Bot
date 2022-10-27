@@ -17,7 +17,7 @@ export default function Nav() {
     : "w-5 h-5 text-gray-600 transform transition-transform -rotate-180";
 
   return (
-    <header className="flex-shrink-0 border-b-2 bg-white p-1">
+    <header className="flex-shrink-0 border-b-2 bg-fondo p-1">
       <div className="flex items-center justify-between p-2">
         {/* Navbar left */}
         <div className="flex items-center">
