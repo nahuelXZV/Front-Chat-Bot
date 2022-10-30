@@ -1,19 +1,72 @@
 import Layout from "../components/Layout";
 import Board from "react-trello";
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
+import useSWR from 'swr'
 
-export default function Tablero({ data }) {
+const fetcher = (...args) => fetch(...args).then((res) => {
+  if (res.status === 200 || res.status === 201) {
+    return res.json();
+  } else {
+    return null;
+  }
+})
+
+export default function Tablero() {
+  const prospectos = useSWR('http://localhost:3010/api/prospectos/', fetcher, { refreshInterval: 4000 })
+  const clientes = useSWR('http://localhost:3010/api/clientes/', fetcher, { refreshInterval: 4000 })
+
   const components = {
     Card: Card,
   };
+
+  if (prospectos.error || clientes.error) return (<Layout title="Tablero">
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+    </div>
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h2 className="text-xl font-bold ml-4">Error al cargar los datos...</h2>
+      <div className="ml-4 text-black">
+        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+      </div>
+    </div>
+  </Layout>)
+  if (!prospectos.data || !clientes.data) return (<Layout title="Tablero">
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+    </div>
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h2 className="text-xl font-bold ml-4">Cargando...</h2>
+      <div className="ml-4 text-black">
+        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+      </div>
+    </div>
+  </Layout>)
+
+  let dataTablero = {
+    lanes: [],
+  };
+  let listaP = getDataProspecto(prospectos.data.body)
+  let listaC = getDataCliente(clientes.data.body)
+
+  dataTablero.lanes.push(createPanel("prospectos", "PROSPECTO", listaP.prospectos));
+  dataTablero.lanes.push(createPanel("contactos", "CONTACTADOS", listaP.contactos));
+  dataTablero.lanes.push(createPanel("clientes", "CLIENTES", listaC.clientes));
+  dataTablero.lanes.push(createPanel("frecuentes", "CLIENTES FRECUENTES", listaC.frecuentes));
+
   return (
     <Layout title="Tablero">
       <div className="flex flex-row items-center mb-2 mt-2">
         <h1 className="text-2xl font-bold ml-4">Tablero</h1>
       </div>
       <Board
-        data={data}
+        data={dataTablero}
         components={components}
         draggable={false}
         cardDraggable={false}
@@ -145,22 +198,12 @@ function createPanel(id, title, dataPanel, color = '#30336b') {
   return panelData;
 }
 
-export async function getServerSideProps() {
-  let dataTablero = {
-    lanes: [],
-  };
+function getDataProspecto(datos) {
   let listProspectos = [];
   let listContactos = [];
-  let listClientes = [];
-  let listFrecuentes = [];
   let tags;
-  // Prospectos y Contactados
-  const prospectos = await fetch(
-    `https://chat-bot-topicos.herokuapp.com/api/prospectos/`
-  );
-  const datas = await prospectos.json();
-  const body = datas.body;
-  body.forEach((element) => {
+
+  datos.forEach((element) => {
     if (element.contactos == 0) {
       tags = [
         {
@@ -204,20 +247,17 @@ export async function getServerSideProps() {
       );
     }
   });
-  dataTablero.lanes.push(
-    createPanel("prospectos", "PROSPECTO", listProspectos)
-  );
-  dataTablero.lanes.push(
-    createPanel("contactos", "CONTACTADOS", listContactos)
-  );
+  return {
+    prospectos: listProspectos,
+    contactos: listContactos,
+  }
+}
 
-  // Clientes y Clientes frecuentes
-  const clientes = await fetch(
-    `https://chat-bot-topicos.herokuapp.com/api/clientes/`
-  );
-  const datas2 = await clientes.json();
-  const body2 = datas2.body;
-  body2.forEach((element) => {
+function getDataCliente(datos) {
+  let tags;
+  let listClientes = [];
+  let listFrecuentes = [];
+  datos.forEach((element) => {
     if (element.cliente.tipo != "frecuente") {
       tags = [
         {
@@ -266,13 +306,8 @@ export async function getServerSideProps() {
       );
     }
   });
-  dataTablero.lanes.push(createPanel("clientes", "CLIENTES", listClientes));
-  dataTablero.lanes.push(
-    createPanel("frecuentes", "CLIENTES FRECUENTES", listFrecuentes)
-  );
   return {
-    props: {
-      data: dataTablero,
-    }, // will be passed to the page component as props
-  };
+    clientes: listClientes,
+    frecuentes: listFrecuentes,
+  }
 }

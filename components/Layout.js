@@ -16,7 +16,6 @@ export default function Layout({ children, title }) {
         <Aside />
         <div className="flex flex-col flex-1 h-full overflow-hidden">
           <Nav />
-
           <main className="flex-1 max-h-full p-1 py-1 overflow-hidden overflow-y-scroll">
             {children}
           </main>

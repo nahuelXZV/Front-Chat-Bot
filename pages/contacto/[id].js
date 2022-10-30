@@ -5,8 +5,6 @@ import Link from "next/link";
 
 export default function Detalles({ data }) {
     const [contactos, setContactos] = useState(data);
-    console.log(contactos);
-
     return (
         <Layout title="Detalles">
             <div className={styles.container}>
@@ -15,7 +13,6 @@ export default function Detalles({ data }) {
                     {/* Link de volver */}
                     <Link href="/tablero">
                         <button
-                            type="button"
                             class="flex items-center border border-aside bg-aside text-white rounded-md px-3 py-1 m-2 transition duration-500 ease select-none hover:bg-aside focus:outline-none focus:shadow-outline">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -37,7 +34,7 @@ export default function Detalles({ data }) {
                                         <div class="text-lg font-bold text-slate-700">{dat.tipoComunicacion}</div>
                                     </div>
                                     <div class="flex items-center space-x-8">
-                                        <div class="text-xs text-neutral-500 text-black">{dat.fecha}</div>
+                                        <div class="text-xs  text-black">{dat.fecha}</div>
                                     </div>
                                 </div>
 

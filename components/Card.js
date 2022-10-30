@@ -1,19 +1,9 @@
 import Image from "next/image";
 import React from "react";
 import FormContacto from "./FormContacto";
-import DetallesContacto from "./DetallesContacto";
 import Link from "next/link";
 
-export default function Card({
-    id,
-    title,
-    facebookId,
-    data = [],
-    tags,
-    image,
-    metadata,
-    type
-}) {
+export default function Card({ id, title, facebookId, data = [], tags, image, metadata, type }) {
     const [showModal, setShowModal] = React.useState(false);
 
     return (
@@ -21,13 +11,7 @@ export default function Card({
             <div class="mb-2 shadow-lg rounded-xl w-72 md:w-80 p-3 bg-white relative overflow-hidden">
                 <a class="w-full h-full block text-black">
                     <div class="flex items-center border-b-2 mb-2 py-2">
-                        <Image
-                            src={image}
-                            alt="Picture of the author"
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 object-cover rounded-full"
-                        />
+                        <Image src={image} alt="Picture of the author" width={40} height={40} className="w-10 h-10 object-cover rounded-full" />
                         <div class="pl-3 text-black">
                             <div class="font-medium">{title}</div>
                             <div class="text-gray-600 text-sm ">FacebookId: {facebookId}</div>
