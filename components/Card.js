@@ -36,7 +36,7 @@ export default function Card({
                     <div class="w-full mb-3">
                         {data.map((dat, index) => {
                             return (
-                                <p class="text-gray-600 text-sm font-medium mb-0.1">
+                                <p class="text-gray-600 text-sm font-medium mb-0.1" key={index}>
                                     <span className="text-gray-800 text-sm font-bold">
                                         {dat.key}: &nbsp;
                                     </span>
@@ -76,7 +76,7 @@ export default function Card({
                             {tags.map((tag, index) => {
                                 return (
                                     // texto con variables de tailwind
-                                    <button class={`ml-1 bg-${tag.color}-200 text-black text-xs font-medium rounded-full px-1 py-1 hover:bg-${tag.color}-300`}                  >
+                                    <button key={index} class={`ml-1 bg-${tag.color}-200 text-black text-xs font-medium rounded-full px-1 py-1 hover:bg-${tag.color}-300`}                  >
                                         {tag.title}
                                     </button>
                                 );
@@ -95,7 +95,7 @@ export default function Card({
                                 {/*header*/}
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
                                     {/* imagen redonda pequena */}
-                                    <img src={image} className="rounded-full w-10 h-10 mr-3" />
+                                    <Image src={image} alt="Picture of the author" width={40} height={40} className="w-10 h-10 object-cover rounded-full" />
                                     <div class="pl-3 text-black">
                                         <div class="font-medium">{title}</div>
                                         <div class="text-gray-600 text-sm">
@@ -122,7 +122,10 @@ export default function Card({
                                         </svg>
                                     </button>
                                 </div>
+
                                 {type == "prospecto" ? (<FormContacto data={metadata} />) : ('')}
+
+
                             </div>
                         </div>
                     </div>

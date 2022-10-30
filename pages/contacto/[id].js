@@ -29,10 +29,9 @@ export default function Detalles({ data }) {
                 <div class='flex flex-col items-center justify-center'>
                     {
                         contactos.map((dat, index) => {
-                            return <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-4">
+                            return <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-4" key={index}>
                                 <div class="flex w-full items-center justify-between border-b pb-3">
                                     <div class="flex items-center space-x-3">
-                                        {/* <div class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div> */}
                                         {/* imagen del icono de facebook */}
                                         <div class="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://www.facebook.com/rsrc.php/v3/y8/r/S0U5ECzYUSu.png')]"></div>
                                         <div class="text-lg font-bold text-slate-700">{dat.tipoComunicacion}</div>

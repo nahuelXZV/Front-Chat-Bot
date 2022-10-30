@@ -145,7 +145,7 @@ function createPanel(id, title, dataPanel, color = '#30336b') {
   return panelData;
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   let dataTablero = {
     lanes: [],
   };

@@ -29,7 +29,7 @@ export default function Detalles({ data }) {
                     {
                         pedidos.map((pedido, index) => {
                             return (
-                                <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-2">
+                                <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-2" key={index}>
                                     <div class="flex w-full items-center justify-between border-b pb-3">
                                         <div class="flex flex-col items-start">
                                             <div class="text-lg font-bold text-slate-700">Monto Total: {pedido.pedido.montoTotal} Bs</div>
@@ -44,7 +44,7 @@ export default function Detalles({ data }) {
                                         {
                                             pedido.detalles?.map((detalle, index) => {
                                                 return (
-                                                    <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer mb-2">
+                                                    <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer mb-2" key={index}>
                                                         <div class="mr-4"><div class="h-9 w-9 rounded-sm flex items-center justify-center text-3xl" >
                                                             <Image src={detalle.pizzaId?.imagen} alt="Picture of the author" width={50} height={50} />
                                                         </div>

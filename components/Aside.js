@@ -34,7 +34,7 @@ export default function Aside() {
         <div className={styleHeader}>
           <span className="p-2 text-lg font-bold leading-8 tracking-wider uppercase whitespace-nowrap">
             <Link href="/">
-              <a href="/" className={styleHidden}>
+              <a className={styleHidden}>
                 SISTEMA WEB
               </a>
             </Link>
@@ -62,7 +62,7 @@ export default function Aside() {
           <ul className="p-2">
             <li>
               <Link href="/">
-                <a href="/" className={styleLink}>
+                <a className={styleLink}>
                   <span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
