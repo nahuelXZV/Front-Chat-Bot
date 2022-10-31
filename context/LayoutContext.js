@@ -6,12 +6,12 @@ const AppContext = createContext({
   isSidebarOpen: false,
   isSettingsPanelOpen: false,
   isSearchBoxOpen: false,
-  toggleSidbarMenu: () => {},
-  setIsSettingsPanelOpen: () => {},
+  toggleSidbarMenu: () => { },
+  setIsSettingsPanelOpen: () => { },
 });
 
 export default function LayoutContext({ children }) {
-  const isMobile = useMediaQuery({ query: "(max-width: 1024px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 1200px)" });
   const [isSidebarOpen, setIsSidebarOpen] = useState(isMobile);
   const [loading, setLoading] = useState(true);
   const [isSettingsPanelOpen, setIsSettingsPanelOpen] = useState(false);

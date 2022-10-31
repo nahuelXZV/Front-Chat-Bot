@@ -1,226 +1,78 @@
 import Layout from "../components/Layout";
 import Board from "react-trello";
-import React, { Component } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
+import useSWR from 'swr'
 
-export default function Tablero({ data }) {
-  const [showModal, setShowModal] = React.useState(false);
-  const [dataModal, setDataModal] = React.useState({});
+const fetcher = (...args) => fetch(...args).then((res) => {
+  if (res.status === 200 || res.status === 201) {
+    return res.json();
+  } else {
+    return null;
+  }
+})
+
+export default function Tablero() {
+  const prospectos = useSWR('http://localhost:3010/api/prospectos/', fetcher, { refreshInterval: 4000 })
+  const clientes = useSWR('http://localhost:3010/api/clientes/', fetcher, { refreshInterval: 4000 })
 
   const components = {
     Card: Card,
   };
+
+  if (prospectos.error || clientes.error) return (<Layout title="Tablero">
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+    </div>
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h2 className="text-xl font-bold ml-4">Error al cargar los datos...</h2>
+      <div className="ml-4 text-black">
+        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+      </div>
+    </div>
+  </Layout>)
+  if (!prospectos.data || !clientes.data) return (<Layout title="Tablero">
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+    </div>
+    <div className="flex flex-row items-center mb-2 mt-2">
+      <h2 className="text-xl font-bold ml-4">Cargando...</h2>
+      <div className="ml-4 text-black">
+        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+      </div>
+    </div>
+  </Layout>)
+
+  let dataTablero = {
+    lanes: [],
+  };
+  let listaP = getDataProspecto(prospectos.data.body)
+  let listaC = getDataCliente(clientes.data.body)
+
+  dataTablero.lanes.push(createPanel("prospectos", "PROSPECTO", listaP.prospectos));
+  dataTablero.lanes.push(createPanel("contactos", "CONTACTADOS", listaP.contactos));
+  dataTablero.lanes.push(createPanel("clientes", "CLIENTES", listaC.clientes));
+  dataTablero.lanes.push(createPanel("frecuentes", "CLIENTES FRECUENTES", listaC.frecuentes));
+
   return (
     <Layout title="Tablero">
+      <div className="flex flex-row items-center mb-2 mt-2">
+        <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+      </div>
       <Board
-        data={data}
+        data={dataTablero}
         components={components}
         draggable={false}
-        cardDraggable={true}
+        cardDraggable={false}
         laneDraggable={false}
-        onCardClick={(cardId, metadata, laneId) => {
-          setDataModal({
-            ...metadata,
-            laneId,
-          });
-          setShowModal(true);
-        }}
-        style={{ backgroundColor: "#1e3a8a" }}
+        style={{ backgroundColor: "#dff9fb", padding: "5px 10px" }}
       />
-      {showModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-1/2 my-6 mx-auto max-w-3xl">
-              {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                {/*header*/}
-                <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
-                  {/* imagen redonda pequena */}
-                  <img
-                    src={dataModal.prospecto?.foto}
-                    className="rounded-full w-10 h-10 mr-3"
-                  />
-                  <h3 className="text-3xl font-semibold mr-20">
-                    {dataModal.laneId === "prospectos" ||
-                    dataModal.laneId === "contactos"
-                      ? dataModal.prospecto?.nombre
-                      : dataModal.cliente?.nombre}
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setShowModal(false)}
-                  >
-                    <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      X
-                    </span>
-                  </button>
-                </div>
-                {/*body*/}
-                <div className="relative p-6 flex-auto">
-                  <p className="my-4 text-slate-500 text-lg leading-relaxed">
-                    {/* Id de facebook */}
-                    <span className="font-bold"> Codigo Facebook: </span>
-                    {dataModal.prospecto?.facebookId} <br />
-                    {/* Correo */}
-                    {dataModal.laneId == "clientes" ||
-                    dataModal.laneId == "frecuentes" ? (
-                      <>
-                        <span className="font-bold"> Correo: </span>
-                        {dataModal.cliente?.correo} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Telefono */}
-                    {dataModal.laneId == "clientes" ||
-                    dataModal.laneId == "frecuentes" ? (
-                      <>
-                        <span className="font-bold"> Telefono: </span>
-                        {dataModal.cliente?.telefono} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Ultima Ves */}
-                    {dataModal.laneId === "prospectos" ||
-                    dataModal.laneId === "contactos" ? (
-                      <>
-                        <span className="font-bold"> Ult. Vez: </span>
-                        {dataModal.ultimoIngreso?.fecha} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Ultimo Contacto */}
-                    {dataModal.laneId === "contactos" ? (
-                      <>
-                        <span className="font-bold"> Ult. Contacto: </span>
-                        {dataModal.ultimoContacto?.fecha} <br />
-                        <span className="font-bold"> Tipo comunicacion: </span>
-                        {dataModal.ultimoContacto?.tipoComunicacion} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Frecuencia Compra */}
-                    {dataModal.laneId == "frecuentes" ? (
-                      <>
-                        <span className="font-bold">
-                          Frecuencia de compra:{" "}
-                        </span>
-                        {dataModal.frecuencia} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Ultimo Pedido */}
-                    {dataModal.laneId == "clientes" ||
-                    dataModal.laneId == "frecuentes" ? (
-                      <>
-                        <span className="font-bold">Ultimo pedido: </span>
-                        {dataModal.ultimoPedido?.fecha} <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Monto Ultimo Pedido */}
-                    {dataModal.laneId == "clientes" ? (
-                      <>
-                        <span className="font-bold">Monto Ult. pedido: </span>
-                        {dataModal.ultimoPedido?.montoTotal} Bs <br />
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {/* Promedio de compra */}
-                    {dataModal.laneId == "frecuentes" ? (
-                      <>
-                        <span className="font-bold">Promedio de compra: </span>
-                        {dataModal.promedioCompra}
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </p>
-                </div>
-                {/*footer*/}
-                <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Cerrar
-                  </button>
-                  {dataModal.laneId === "prospectos" ? (
-                    <Link href="/contactar">
-                      <button
-                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Contactar
-                      </button>
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                  {dataModal.laneId === "contactos" ? (
-                    <Link href="/detalles">
-                      <button
-                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Ver detalles
-                      </button>
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                  {dataModal.laneId === "clientes" ? (
-                    <Link href="/pedidos">
-                      <button
-                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Ver pedidos
-                      </button>
-                    </Link>
-                  ) : (
-                    ""
-                  )}
-                  {dataModal.laneId === "frecuentes" ? (
-                    <>
-                      <Link href="/pedidos">
-                        <button
-                          className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                          type="button"
-                          onClick={() => setShowModal(false)}
-                        >
-                          Ver pedidos
-                        </button>
-                      </Link>
-                      <button
-                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Notificar
-                      </button>
-                    </>
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
     </Layout>
   );
 }
@@ -330,36 +182,28 @@ function cardData(
     tags: tags,
     image: imagen,
     metadata: dataCard,
+    type: type,
   };
   return cardData;
 }
 
-function createPanel(id, title, dataPanel) {
+function createPanel(id, title, dataPanel, color = '#30336b') {
   let panelData = {
     id: id,
     title: title,
     label: dataPanel.length + "/10",
     cards: dataPanel,
+    style: { backgroundColor: color, color: "white" },
   };
   return panelData;
 }
 
-export async function getServerSideProps(context) {
-  let dataTablero = {
-    lanes: [],
-  };
+function getDataProspecto(datos) {
   let listProspectos = [];
   let listContactos = [];
-  let listClientes = [];
-  let listFrecuentes = [];
   let tags;
-  // Prospectos y Contactados
-  const prospectos = await fetch(
-    `https://chat-bot-topicos.herokuapp.com/api/prospectos/`
-  );
-  const datas = await prospectos.json();
-  const body = datas.body;
-  body.forEach((element) => {
+
+  datos.forEach((element) => {
     if (element.contactos == 0) {
       tags = [
         {
@@ -403,20 +247,17 @@ export async function getServerSideProps(context) {
       );
     }
   });
-  dataTablero.lanes.push(
-    createPanel("prospectos", "Prospectos", listProspectos)
-  );
-  dataTablero.lanes.push(
-    createPanel("contactos", "Contactados", listContactos)
-  );
+  return {
+    prospectos: listProspectos,
+    contactos: listContactos,
+  }
+}
 
-  // Clientes y Clientes frecuentes
-  const clientes = await fetch(
-    `https://chat-bot-topicos.herokuapp.com/api/clientes/`
-  );
-  const datas2 = await clientes.json();
-  const body2 = datas2.body;
-  body2.forEach((element) => {
+function getDataCliente(datos) {
+  let tags;
+  let listClientes = [];
+  let listFrecuentes = [];
+  datos.forEach((element) => {
     if (element.cliente.tipo != "frecuente") {
       tags = [
         {
@@ -445,7 +286,7 @@ export async function getServerSideProps(context) {
         {
           bgcolor: "#0079BF",
           color: "blue",
-          title: "Notificaciones: " + element.notificaciones,
+          title: "Notificacion: " + element.notificaciones,
         },
         {
           bgcolor: "yellow",
@@ -465,13 +306,8 @@ export async function getServerSideProps(context) {
       );
     }
   });
-  dataTablero.lanes.push(createPanel("clientes", "Clientes", listClientes));
-  dataTablero.lanes.push(
-    createPanel("frecuentes", "Clientes frecuentes", listFrecuentes)
-  );
   return {
-    props: {
-      data: dataTablero,
-    }, // will be passed to the page component as props
-  };
+    clientes: listClientes,
+    frecuentes: listFrecuentes,
+  }
 }
