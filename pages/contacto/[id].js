@@ -20,12 +20,12 @@ export default function Detalles({ data }) {
                             <span className="ml-2">Volver</span>
                         </button>
                     </Link>
-                    <h1 className="text-2xl font-bold ml-6">Detalles de contacto de {contactos[0].prospectoId?.nombre}</h1>
+                    <h1 className="text-2xl font-bold ml-6">Detalles de contacto de {contactos.prospecto.nombre}</h1>
                 </div>
                 {/* Lista con los datos de los contactos */}
                 <div class='flex flex-col items-center justify-center'>
                     {
-                        contactos.map((dat, index) => {
+                        contactos.contactos.map((dat, index) => {
                             return <div class="rounded-xl border p-5 shadow-md w-full bg-white mb-4" key={index}>
                                 <div class="flex w-full items-center justify-between border-b pb-3">
                                     <div class="flex items-center space-x-3">
@@ -55,7 +55,7 @@ export default function Detalles({ data }) {
 
 export async function getServerSideProps(context) {
     const { id } = context.query;
-    const url = "https://chat-bot-topicos.herokuapp.com/api/prospectos/contacto/" + id;
+    const url = "http://localhost:3010/api/prospectos/contacto/" + id;
     // const token = "keyw3fjK3q3q8XsW2";
     const headers = {
         // Authorization: `Bearer ${token}`,

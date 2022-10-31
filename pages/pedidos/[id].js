@@ -23,7 +23,6 @@ export default function Detalles({ data }) {
                     </Link>
                     <h1 className="text-2xl font-bold ml-6">Lista de pedidos de {pedidos[0].pedido?.clienteId?.nombre}</h1>
                 </div>
-                {/* Lista con los datos de los contactos */}
                 <div class='flex flex-col'>
                     {
                         pedidos.map((pedido, index) => {
@@ -42,7 +41,7 @@ export default function Detalles({ data }) {
                                         {
                                             pedido.detalles?.map((detalle, index) => {
                                                 return (
-                                                    <div class="w-full flex items-center hover:bg-gray-300 rounded-lg cursor-pointer mb-2" key={index}>
+                                                    <div class="w-full flex items-center rounded-lg mb-2" key={index}>
                                                         <div class="mr-4"><div class="h-9 w-9 rounded-sm flex items-center justify-center text-3xl" >
                                                             <Image src={detalle.pizzaId?.imagen} alt="Picture of the author" width={50} height={50} />
                                                         </div>

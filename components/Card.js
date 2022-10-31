@@ -8,59 +8,59 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
 
     return (
         <>
-            <div class="mb-2 shadow-lg rounded-xl w-72 md:w-80 p-3 bg-white relative overflow-hidden">
-                <a class="w-full h-full block text-black">
-                    <div class="flex items-center border-b-2 mb-2 py-2">
+            <div className="mb-2 shadow-lg rounded-xl w-72 md:w-80 p-3 bg-white relative overflow-hidden">
+                <a className="w-full h-full block text-black">
+                    <div className="flex items-center border-b-2 mb-2 py-2">
                         <Image src={image} alt="Picture of the author" width={40} height={40} className="w-10 h-10 object-cover rounded-full" />
-                        <div class="pl-3 text-black">
-                            <div class="font-medium">{title}</div>
-                            <div class="text-gray-600 text-sm ">FacebookId: {facebookId}</div>
+                        <div className="pl-3 text-black">
+                            <div className="font-medium">{title}</div>
+                            <div className="text-gray-600 text-sm ">FacebookId: {facebookId}</div>
                         </div>
                     </div>
-                    <div class="w-full mb-3">
+                    <div className="w-full mb-3">
                         {data.map((dat, index) => {
                             return (
-                                <p class="text-gray-600 text-sm font-medium mb-0.1" key={index}>
+                                <p className="text-gray-600 text-sm font-medium mb-0.1" key={index}>
                                     <span className="text-gray-800 text-sm font-bold">
                                         {dat.key}: &nbsp;
                                     </span>
-                                    {dat.value}
+                                    {dat.value ? dat.value : "N/A"}
                                 </p>
                             );
                         })}
                     </div>
                     {/* tags con colores */}
-                    <div class="flex flex-row">
-                        <div class="flex basis-1/2">
+                    <div className="flex flex-row">
+                        <div className="flex basis-1/2">
                             {type === "prospecto" ? <button
-                                class="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full"
+                                className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full"
                                 onClick={() => setShowModal(true)}>
                                 Contactar
                             </button> : ""}
                             {type === "contacto" ?
                                 (<Link href={`/contacto/${metadata.prospecto._id}`}>
-                                    <a class="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full">
+                                    <a className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full">
                                         Detalles
                                     </a>
                                 </Link>) : ""}
                             {type === "cliente" || type === "frecuente" ?
                                 (<Link href={`/pedidos/${metadata.cliente._id}`}>
-                                    <a class="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full mr-2">
+                                    <a className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full mr-2">
                                         Pedidos
                                     </a>
                                 </Link>) : ""}
                             {type === "frecuente" ?
                                 (<Link href='/'>
-                                    <a class="bg-green-500 text-xs hover:bg-green-600 text-white font-medium py-1 px-2 rounded-full">
+                                    <a className="bg-green-500 text-xs hover:bg-green-600 text-white font-medium py-1 px-2 rounded-full">
                                         Notificar
                                     </a>
                                 </Link>) : ""}
                         </div>
-                        <div class="flex basis-1/2">
+                        <div className="flex basis-1/2">
                             {tags.map((tag, index) => {
                                 return (
                                     // texto con variables de tailwind
-                                    <button key={index} class={`ml-1 bg-${tag.color}-200 text-black text-xs font-medium rounded-full px-1 py-1 hover:bg-${tag.color}-300`}                  >
+                                    <button key={index} className={`ml-1 bg-${tag.color}-200 text-black text-xs font-medium rounded-full px-1 py-1 hover:bg-${tag.color}-300`}                  >
                                         {tag.title}
                                     </button>
                                 );
@@ -94,13 +94,13 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
                                             xmlns="http://www.w3.org/2000/svg"
                                             fill="none"
                                             viewBox="0 0 24 24"
-                                            stroke-width="1.5"
+                                            strokeWidth="1.5"
                                             stroke="currentColor"
-                                            class="w-6 h-6"
+                                            className="w-6 h-6"
                                         >
                                             <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
                                                 d="M6 18L18 6M6 6l12 12"
                                             />
                                         </svg>
