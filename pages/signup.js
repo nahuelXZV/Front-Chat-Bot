@@ -3,15 +3,26 @@ import Layout from "../components/Layout_Login";
 
 import React, { Component } from "react";
 import {useRouter} from "next/router";
+import { useEffect } from "react";
 
 export default function SignUp() {
 //const SignUp = () => {
+  const [nombre, setNombre] = React.useState('');
+  const [direccion, setDireccion] = React.useState('');
+  const [telefono, setTelefono] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [errorMessages, setErrorMessages] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const auth = localStorage.getItem("user");
+    if(auth){
+      router.push('/tablero');
+    }
+  }, [])
 
   const errors = {
     email: "Email ya registrado",
@@ -30,22 +41,21 @@ export default function SignUp() {
             'Accept':'application/json',
             'Content-Type':'application/json'
         },
-        body: JSON.stringify({email,password})
+        body: JSON.stringify({nombre,direccion,telefono,email,password})
         
     }          
       let result = await fetch("http://localhost:3010/api/users/register",config);    
       result = await result.json();
       console.warn(result);
-      if("email" === result.error){
-        console.log("entra");
+      if("email" === result.error){        
         setErrorMessages({ name: "email", message: errors.email });
-      }else{
-        console.log("no entra");
+      }else{        
         if(result.error === "password"){
           setErrorMessages({ name: "pass", message: errors.pass });
-        }else{            
-          console.warn(result);
-          router.push('/tablero'); 
+        }else{                      
+          console.warn(result);          
+          localStorage.setItem('user', JSON.stringify(result));
+          router.push('/tablero');           
         }
         
       }
@@ -58,7 +68,19 @@ export default function SignUp() {
           <div className={styles.title}>Registrar usuario</div>
           <div className={styles.form}>            
               <div className={styles.inputContainer}>
-                <label> Usuario </label>
+                <label> Nombre </label>
+                <input type="text" required className={styles.inputText} onChange={(e) => setNombre(e.target.value)} value={nombre}/>                
+              </div>
+              <div className={styles.inputContainer}>
+                <label> Dirección </label>
+                <input type="text" required className={styles.inputText} onChange={(e) => setDireccion(e.target.value)} value={direccion}/>                
+              </div>
+              <div className={styles.inputContainer}>
+                <label> Nro. Celular </label>
+                <input type="number" required className={styles.inputText} onChange={(e) => setTelefono(e.target.value)} value={telefono}/>                
+              </div>
+              <div className={styles.inputContainer}>
+                <label> Email </label>
                 <input type="text" required className={styles.inputText} onChange={(e) => setEmail(e.target.value)} value={email}/>
                 {renderErrorMessage("email")}
               </div>

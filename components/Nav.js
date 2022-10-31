@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import LoginName from "./Login";
 import { useAppContext } from "../context/LayoutContext";
 
-export default function Nav() {
-  const layotContext = useAppContext();
 
+export default function Nav() {
+  const layotContext = useAppContext();  
+  
   function toggle() {
     layotContext.toggleSidbarMenu();
   }
@@ -63,7 +65,7 @@ export default function Nav() {
                       height={20}
                       className="rounded-full w-8 h-auto"
                     />
-                    <h3 className="font-bold ml-2"> Nahuel Zalazar </h3>
+                    <LoginName />                    
                   </div>
                 </div>
               </a>
