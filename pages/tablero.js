@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import Board from "react-trello";
 import React, { useState, useEffect } from "react";
 import Card from "../components/Card";
-import useSWR from 'swr'
+import useSWR from 'swr';
 
 const fetcher = (...args) => fetch(...args).then((res) => {
   if (res.status === 200 || res.status === 201) {
