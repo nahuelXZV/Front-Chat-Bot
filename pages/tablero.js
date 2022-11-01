@@ -13,8 +13,8 @@ const fetcher = (...args) => fetch(...args).then((res) => {
 })
 
 export default function Tablero() {
-  const prospectos = useSWR('http://localhost:3010/api/prospectos/', fetcher, { refreshInterval: 4000 })
-  const clientes = useSWR('http://localhost:3010/api/clientes/', fetcher, { refreshInterval: 4000 })
+  const prospectos = useSWR('https://chat-bot-topicos.herokuapp.com/api/prospectos/', fetcher, { refreshInterval: 4000 })
+  const clientes = useSWR('https://chat-bot-topicos.herokuapp.com/api/clientes/', fetcher, { refreshInterval: 4000 })
 
   const components = {
     Card: Card,

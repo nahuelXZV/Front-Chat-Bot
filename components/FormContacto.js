@@ -19,7 +19,7 @@ export default function FormContacto({ data }) {
             empleadoId = user.body.empleado?._id;
         }
 
-        const url = "http://localhost:3010/api/prospectos/contacto";
+        const url = "https://chat-bot-topicos.herokuapp.com/api/prospectos/contacto";
         // const token = "keyw3fjK3q3q8XsW2";
         const headers = {
             // Authorization: `Bearer ${token}`,
