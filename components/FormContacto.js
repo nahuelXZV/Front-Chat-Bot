@@ -7,12 +7,18 @@ export default function FormContacto({ data }) {
         const fecha = document.getElementById("fecha").value;
         const descripcion = document.getElementById("descripcion").value;
         const id = data.prospecto._id;
-
+        let empleadoId = '';
         // validar que los campos no esten vacios
         if (medio === "" || fecha === "" || descripcion === "") {
             alert("Todos los campos son obligatorios");
             return;
         }
+        if (typeof window !== 'undefined') {
+            let user = localStorage.getItem('user');
+            user = JSON.parse(user);
+            empleadoId = user.body.empleadoId?._id;
+        }
+
         const url = "http://localhost:3010/api/prospectos/contacto";
         // const token = "keyw3fjK3q3q8XsW2";
         const headers = {
@@ -23,7 +29,7 @@ export default function FormContacto({ data }) {
             "tipoComunicacion": medio,
             "descripcion": descripcion,
             "prospectoId": id,
-            "empleadoId": "6355b8d4a2df5edde87d2e6d",
+            "empleadoId": empleadoId,
             "fecha": fecha
         };
         const response = await fetch(url, {
