@@ -1,4 +1,4 @@
-import Nav from "./nav";
+import Nav from "./Nav";
 import Aside from "./Aside";
 import Head from "next/head";
 
