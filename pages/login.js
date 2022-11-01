@@ -3,6 +3,7 @@ import Layout from "../components/Layout_Login";
 
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Login() {
   //const login = () => {
@@ -11,6 +12,13 @@ export default function Login() {
   const [errorMessages, setErrorMessages] = React.useState({});
 
   const router = useRouter();
+
+  useEffect(() => {
+    const auth = localStorage.getItem("user");
+    if(auth){
+      router.push('/tablero');
+    }
+  }, [])
 
   const errors = {
     uname: "invalid email",
@@ -42,6 +50,7 @@ export default function Login() {
         setErrorMessages({ name: "pass", message: errors.pass });
       } else {
         console.warn(result);
+        localStorage.setItem('user', JSON.stringify(result));
         router.push('/tablero');
       }
     }
