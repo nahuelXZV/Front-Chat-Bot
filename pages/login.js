@@ -10,12 +10,13 @@ export default function Login() {
   const [emailError, setEmailError] = React.useState(null);
   const [passError, setPassError] = React.useState(null);
   const [errorLogin, setErrorLogin] = React.useState(null);
-  const router = useRouter();
 
   useEffect(() => {
+    // const router = useRouter();
     const auth = localStorage.getItem("user");
     if (auth) {
-      router.push('/tablero');
+      // router.push('/tablero');
+      window.location.href = "/tablero";
     }
   }, [])
 
@@ -38,7 +39,8 @@ export default function Login() {
       }
       if (result.status == 200) {
         localStorage.setItem("user", JSON.stringify(result));
-        router.push('/tablero');
+        // router.push('/tablero');
+        window.location.href = "/tablero";
         return;
       }
     }

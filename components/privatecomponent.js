@@ -3,12 +3,13 @@ import { useRouter } from "next/router";
 
 const PrivateComponent = () => {
   if (typeof window !== 'undefined') {
-    const router = useRouter();
+    // const router = useRouter();
     const auth = localStorage.getItem("user");
     if (auth) {
       return <></>
     } else {
-      router.push("login");
+      // router.push("login");
+      window.location.href = "/login";
     }
   }
 }

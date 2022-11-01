@@ -19,7 +19,8 @@ export default function SignUp() {
   useEffect(() => {
     const auth = localStorage.getItem("user");
     if (auth) {
-      router.push('/tablero');
+      // router.push('/tablero');
+      window.location.href = "/tablero";
     }
   }, [])
 
@@ -42,7 +43,8 @@ export default function SignUp() {
       }
       if (result.status == 200) {
         localStorage.setItem("user", JSON.stringify(result));
-        router.push('/tablero');
+        // router.push('/tablero');
+        window.location.href = "/tablero";
         return;
       }
     } else {
