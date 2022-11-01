@@ -15,8 +15,7 @@ export default function Nav() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
       user = JSON.parse(user);
-      console.log(user);
-      return user.body.empleadoId?.nombre ? user.body.empleadoId?.nombre : "Usuario";
+      return user.body.empleado.nombre ? user.body.empleado.nombre : "Usuario";
     }
   }
 

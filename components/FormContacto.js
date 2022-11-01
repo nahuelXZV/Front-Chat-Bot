@@ -16,7 +16,7 @@ export default function FormContacto({ data }) {
         if (typeof window !== 'undefined') {
             let user = localStorage.getItem('user');
             user = JSON.parse(user);
-            empleadoId = user.body.empleadoId?._id;
+            empleadoId = user.body.empleado?._id;
         }
 
         const url = "http://localhost:3010/api/prospectos/contacto";
@@ -41,7 +41,6 @@ export default function FormContacto({ data }) {
         console.log(resp);
         if (resp.status == "201") {
             alert("Contacto guardado");
-            return;
         } else {
             alert("Error al guardar el contacto");
         }

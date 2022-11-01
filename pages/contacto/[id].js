@@ -15,7 +15,7 @@ export default function Detalles({ data }) {
                         <button
                             class="flex items-center border border-aside bg-aside text-white rounded-md px-3 py-1 m-2 transition duration-500 ease select-none hover:bg-aside focus:outline-none focus:shadow-outline">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
                             <span className="ml-2">Volver</span>
                         </button>
@@ -39,7 +39,7 @@ export default function Detalles({ data }) {
                                 </div>
 
                                 <div class="mt-4 mb-6">
-                                    <div class="mb-3 text-xl font-bold">{dat.empleadoId?.nombre}</div>
+                                    <div class="mb-3 text-xl font-bold">Encargado: {dat.empleadoId?.nombre}</div>
                                     <div class="text-sm text-neutral-600">
                                         {dat.descripcion}
                                     </div>
