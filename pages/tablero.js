@@ -13,8 +13,8 @@ const fetcher = (...args) => fetch(...args).then((res) => {
 })
 
 export default function Tablero() {
-  const prospectos = useSWR('http://localhost:3010/api/prospectos/', fetcher, { refreshInterval: 4000 })
-  const clientes = useSWR('http://localhost:3010/api/clientes/', fetcher, { refreshInterval: 4000 })
+  const prospectos = useSWR('https://chat-bot-topicos.herokuapp.com/api/prospectos/', fetcher, { refreshInterval: 4000 })
+  const clientes = useSWR('https://chat-bot-topicos.herokuapp.com/api/clientes/', fetcher, { refreshInterval: 4000 })
 
   const components = {
     Card: Card,
@@ -28,7 +28,7 @@ export default function Tablero() {
       <h2 className="text-xl font-bold ml-4">Error al cargar los datos...</h2>
       <div className="ml-4 text-black">
         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
         </svg>
       </div>
@@ -42,7 +42,7 @@ export default function Tablero() {
       <h2 className="text-xl font-bold ml-4">Cargando...</h2>
       <div className="ml-4 text-black">
         <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
         </svg>
       </div>

@@ -9,11 +9,9 @@ export default function Layout_Login({ children, title }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex h-screen overflow-y-hidden bg-white">        
-        <div className="flex flex-col flex-1 h-full overflow-hidden">          
-          <main className="flex-1 max-h-full p-5 py-1 overflow-hidden overflow-y-scroll">
-            {children}
-          </main>
+      <div className="bg-fondo">
+        <div className="flex justify-center h-screen w-screen items-center">
+          {children}
         </div>
       </div>
     </>
