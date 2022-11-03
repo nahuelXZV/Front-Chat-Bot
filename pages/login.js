@@ -18,7 +18,7 @@ export default function Login() {
     if(auth){
       router.push('/tablero');
     }
-  }, [])
+  }, []);
 
   const errors = {
     uname: "invalid email",

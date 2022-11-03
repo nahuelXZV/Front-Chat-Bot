@@ -22,7 +22,7 @@ export default function SignUp() {
     if(auth){
       router.push('/tablero');
     }
-  }, [])
+  }, []);
 
   const errors = {
     email: "Email ya registrado",
