@@ -41,7 +41,7 @@ export default function SignUp() {
         setErrorLogin('Verifique los datos ingresados!');
         return;
       }
-      if (result.status == 200) {
+      if (result.status == 200 || result.status == 201) {
         localStorage.setItem("user", JSON.stringify(result));
         // router.push('/tablero');
         window.location.href = "/tablero";
