@@ -15,7 +15,7 @@ export default function Nav() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
       user = JSON.parse(user);
-      return user.body.empleado.nombre ? user.body.empleado.nombre : "Usuario";
+      return user.body.empleado?.nombre ? user.body.empleado.nombre : "Usuario";
     }
   }
 
@@ -23,7 +23,7 @@ export default function Nav() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
       user = JSON.parse(user);
-      return user.body.user.email;
+      return user.body.user.email ? user.body.user.email : "correo@live.com";
     }
   }
 
@@ -57,8 +57,8 @@ export default function Nav() {
     : "w-5 h-5 text-gray-600 transform transition-transform -rotate-180";
 
   let styleOpenD = open
-    ? `absolute right-0 z-20 w-56 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl`
-    : "hidden absolute right-0 z-20 w-56 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl";
+    ? `absolute right-0 z-20 w-64 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl`
+    : "hidden absolute right-0 z-20 w-64 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl";
 
 
   return (
