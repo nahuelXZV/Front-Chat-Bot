@@ -34,7 +34,7 @@ export default function SignUp() {
         },
         body: JSON.stringify({ nombre, direccion, telefono, email, password })
       }
-      let result = await fetch("http://localhost:3010/api/users/register", config);
+      let result = await fetch("https://chat-bot-topicos.herokuapp.com/api/users", config);
       result = await result.json();
       console.warn(result);
       if (result.error?.statusCode == 400 || result.error?.statusCode == 401) {
