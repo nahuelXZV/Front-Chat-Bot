@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Link from "next/link";
+import { setCookie } from 'cookies-next';
 
 export default function Login() {
   const [email, setEmail] = React.useState("");
@@ -10,15 +11,6 @@ export default function Login() {
   const [emailError, setEmailError] = React.useState(null);
   const [passError, setPassError] = React.useState(null);
   const [errorLogin, setErrorLogin] = React.useState(null);
-
-  useEffect(() => {
-    // const router = useRouter();
-    const auth = localStorage.getItem("user");
-    if (auth) {
-      // router.push('/tablero');
-      window.location.href = "/tablero";
-    }
-  }, [])
 
   const handleLogin = async () => {
     if (email !== "" && password !== "") {
@@ -30,7 +22,7 @@ export default function Login() {
         },
         body: JSON.stringify({ email, password })
       }
-      let result = await fetch("https://chat-bot-topicos.herokuapp.com/api/auth/login", config);
+      let result = await fetch("http://localhost:3010/api/auth/login", config);
       result = await result.json();
       console.log(result);
       if (result.error?.statusCode == 400 || result.error?.statusCode == 401) {
@@ -38,8 +30,9 @@ export default function Login() {
         return;
       }
       if (result.status == 200) {
+        // guardar en los cookies token y usuario 
+        setCookie('auth', 'true', { maxAge: 60 * 60 * 24 * 7 });
         localStorage.setItem("user", JSON.stringify(result));
-        // router.push('/tablero');
         window.location.href = "/tablero";
         return;
       }

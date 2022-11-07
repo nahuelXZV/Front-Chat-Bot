@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Link from "next/link";
+import { setCookie } from 'cookies-next';
 
 export default function SignUp() {
   const [nombre, setNombre] = React.useState('');
@@ -13,16 +14,6 @@ export default function SignUp() {
   const [errorMessages, setErrorMessages] = React.useState({});
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [errorLogin, setErrorLogin] = React.useState(null);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    const auth = localStorage.getItem("user");
-    if (auth) {
-      // router.push('/tablero');
-      window.location.href = "/tablero";
-    }
-  }, [])
 
   const collectData = async () => {
     if (email !== "" && password !== "" && nombre !== "" && direccion !== "" && telefono !== "") {
@@ -42,8 +33,8 @@ export default function SignUp() {
         return;
       }
       if (result.status == 200 || result.status == 201) {
+        setCookie('auth', 'true', { maxAge: 60 * 60 * 24 * 7 });
         localStorage.setItem("user", JSON.stringify(result));
-        // router.push('/tablero');
         window.location.href = "/tablero";
         return;
       }
