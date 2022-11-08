@@ -10,20 +10,20 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [usuario, setUser] = useState('');
   const [email, setEmail] = useState('');
-
-  function local() {
-    if (typeof window !== 'undefined') {
-      let user = localStorage.getItem('user');
-      user = JSON.parse(user);      
-      return user.body.empleado.nombre ? user.body.empleado.nombre : "Usuario";      
-    }
-  }
-
-  function local2() {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+  function localUser() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
       user = JSON.parse(user);
-      return user.body.user.email;      
+      return user.body.user.nomre;                
+    }
+  }
+
+  function localEmail() {
+    if (typeof window !== 'undefined') {
+      let user = localStorage.getItem('user');
+      user = JSON.parse(user);
+      return user.body.user.email;                
     }
   }
 

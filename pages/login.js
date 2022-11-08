@@ -30,7 +30,9 @@ export default function Login() {
         },
         body: JSON.stringify({ email, password })
       }
-      let result = await fetch("https://chat-bot-topicos.herokuapp.com/api/auth/login", config);
+      //let result = await fetch("https://chat-bot-topicos.herokuapp.com/api/auth/login", config);
+      console.log(config);
+      let result = await fetch("http://localhost:3010/api/auth/login", config);
       result = await result.json();
       console.log(result);
       if (result.error?.statusCode == 400 || result.error?.statusCode == 401) {

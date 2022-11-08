@@ -9,9 +9,7 @@ export default function SignUp() {
   const [direccion, setDireccion] = React.useState('');
   const [telefono, setTelefono] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [errorMessages, setErrorMessages] = React.useState({});
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [password, setPassword] = React.useState('');  
   const [errorLogin, setErrorLogin] = React.useState(null);
 
   const router = useRouter();
