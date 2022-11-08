@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useAppContext } from "../context/LayoutContext";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { deleteCookie } from 'cookies-next';
 
 export default function Nav() {
   const router = useRouter();
@@ -14,8 +15,8 @@ export default function Nav() {
   function local() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
-      user = JSON.parse(user);      
-      return user.body.empleado.nombre ? user.body.empleado.nombre : "Usuario";      
+      user = JSON.parse(user);
+      return user?.body?.empleado?.nombre ? user.body.empleado.nombre : "Usuario";
     }
   }
 
@@ -23,7 +24,7 @@ export default function Nav() {
     if (typeof window !== 'undefined') {
       let user = localStorage.getItem('user');
       user = JSON.parse(user);
-      return user.body.user.email;      
+      return user?.body?.user?.email ? user.body.user.email : "correo@live.com";
     }
   }
 
@@ -36,6 +37,7 @@ export default function Nav() {
   function exit() {
     if (typeof window !== 'undefined') {
       localStorage.removeItem("user");
+      deleteCookie('auth');
       router.push("/login");
     }
   }
@@ -57,8 +59,8 @@ export default function Nav() {
     : "w-5 h-5 text-gray-600 transform transition-transform -rotate-180";
 
   let styleOpenD = open
-    ? `absolute right-0 z-20 w-56 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl`
-    : "hidden absolute right-0 z-20 w-56 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl";
+    ? `absolute right-0 z-20 w-60 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl`
+    : "hidden absolute right-0 z-20 w-60 py-2 mt-2 mr-8 overflow-hidden bg-white rounded-md shadow-xl";
 
 
   return (
@@ -82,7 +84,7 @@ export default function Nav() {
 
         <div className="relative flex justify-center space-x-3 mr-8">
           <div className="relative">
-            <button onClick={toggleD} className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-fondo border border-transparent rounded-md focus:border-blue-500 focus:ring-opacity-40 focus:ring-blue-300  focus:outline-none">
+            <button onClick={toggleD} className="relative z-10 flex items-center p-2 text-sm text-gray-600 bg-fondo border border-transparent rounded-md">
               <span className="mx-1 font-bold">{usuario}</span>
               <svg className="w-5 h-5 mx-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 15.713L18.01 9.70299L16.597 8.28799L12 12.888L7.40399 8.28799L5.98999 9.70199L12 15.713Z" fill="currentColor"></path>
@@ -92,18 +94,36 @@ export default function Nav() {
         </div>
       </div>
       <div className={styleOpenD}>
-        <button className="flex items-start p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform hover:bg-gray-100 ">
-          <Image src="/images/user.png" alt="Picture of the author" width={35} height={35} className="flex-shrink-0 object-cover mr-4 rounded-full w-9 h-9" />
-          <div className="mx-4 ml-2">
-            <h1 className="text-sm font-semibold text-gray-700">{usuario}</h1>
-            <p className="text-sm text-gray-500 ">{email}</p>
+        <button className="w-full flex items-start p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform hover:bg-gray-100 ">
+          <div className="mx-4 ml-2 w-full">
+            {/* imagen redonda */}
+            <div className="relative w-12 h-12 mx-auto mb-2 overflow-hidden rounded-full">
+              <Image
+                src="/images/user.png"
+                alt="user"
+                layout="fill"
+                objectFit="cover"
+                width={20}
+                height={20}
+              />
+            </div>
+            <h1 className="text-sm font-semibold text-gray-700">
+              {usuario}
+              <p className="text-sm text-gray-500">{email}</p>
+            </h1>
           </div>
         </button>
         <hr className="border-gray-200" />
-        <button onClick={exit} className="block w-56 px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
-          Cerrar Sesion
+        <button onClick={exit} className="font-bold w-full block px-4 py-3 text-md text-gray-600 capitalize transition-colors duration-200 transform hover:bg-gray-100">
+          {/* icono de cerrar sesion felcha saliendo*/}
+          <h4 className="">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 inline-block mr-2 ml-2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+            </svg>
+            Cerrar Sesion
+          </h4>
         </button>
       </div>
-    </header>
+    </header >
   );
 }

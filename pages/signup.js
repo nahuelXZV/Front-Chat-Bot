@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import Link from "next/link";
+import { setCookie } from 'cookies-next';
 
 export default function SignUp() {
   const [nombre, setNombre] = React.useState('');
@@ -12,6 +13,7 @@ export default function SignUp() {
   const [password, setPassword] = React.useState('');  
   const [errorLogin, setErrorLogin] = React.useState(null);
 
+<<<<<<< HEAD
   const router = useRouter();
 
   useEffect(() => {
@@ -22,6 +24,8 @@ export default function SignUp() {
     }
   }, []);
 
+=======
+>>>>>>> a4af2ded5f984012e120105efc41f3bac730abe7
   const collectData = async () => {
     if (email !== "" && password !== "" && nombre !== "" && direccion !== "" && telefono !== "") {
       let config = {
@@ -32,16 +36,16 @@ export default function SignUp() {
         },
         body: JSON.stringify({ nombre, direccion, telefono, email, password })
       }
-      let result = await fetch("http://localhost:3010/api/users/register", config);
+      let result = await fetch("https://chat-bot-topicos.herokuapp.com/api/users", config);
       result = await result.json();
       console.warn(result);
       if (result.error?.statusCode == 400 || result.error?.statusCode == 401) {
         setErrorLogin('Verifique los datos ingresados!');
         return;
       }
-      if (result.status == 200) {
+      if (result.status == 200 || result.status == 201) {
+        setCookie('auth', 'true', { maxAge: 60 * 60 * 24 * 7 });
         localStorage.setItem("user", JSON.stringify(result));
-        // router.push('/tablero');
         window.location.href = "/tablero";
         return;
       }

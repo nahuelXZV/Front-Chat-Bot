@@ -32,8 +32,8 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
                     {/* tags con colores */}
                     <div className="flex flex-row">
                         <div className="flex basis-1/2">
-                            {type === "prospecto" ? <button
-                                className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full"
+                            {type === "prospecto" || type === "contacto" ? <button
+                                className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full mr-2"
                                 onClick={() => setShowModal(true)}>
                                 Contactar
                             </button> : ""}
@@ -107,7 +107,7 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
                                     </button>
                                 </div>
 
-                                {type == "prospecto" ? (<FormContacto data={metadata} />) : ('')}
+                                {type == "prospecto" || type == "contacto" ? (<FormContacto data={metadata} />) : ('')}
 
 
                             </div>
