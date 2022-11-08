@@ -1,5 +1,5 @@
 import styles from "../../styles/Home.module.css";
-import Layout from "../../components/Layout2";
+import Layout from "../../components/Layout";
 import Lista from "../../components/ListaUsuarios";
 export default function Usuario() {
   return (
