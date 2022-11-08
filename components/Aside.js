@@ -59,7 +59,7 @@ export default function Aside() {
                 </a>
               </Link>
             </li>
-            <li>
+            {/*             <li>
               <Link href="/usuario">
                 <a className={styleLink}>
                   <span>
@@ -70,7 +70,7 @@ export default function Aside() {
                   <span className={styleHidden}>Usuarios</span>
                 </a>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/tablero">
                 <a className={styleLink}>
