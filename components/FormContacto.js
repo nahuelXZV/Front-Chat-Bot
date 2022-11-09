@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function FormContacto({ data }) {
-    
+
     async function save(data) {
         // valores del formulario
         const medio = document.getElementById("medio").value;

@@ -26,11 +26,11 @@ const fetcher = (...args) => fetch(...args).then((res) => {
 
 
 export default function Promociones() {
-    const promos = useSWR('http://localhost:3010/api/promociones', fetcher)
+    const promos = useSWR('https://chat-bot-topicos.herokuapp.com/api/promociones', fetcher)
 
     if (promos.error) return (<Layout title="Tablero">
         <div className="flex flex-row items-center mb-2 mt-2">
-            <h1 className="text-2xl font-bold ml-4">Tablero</h1>
+            <h1 className="text-2xl font-bold ml-4">Lista de promociones</h1>
         </div>
         <div className="flex flex-row items-center mb-2 mt-2">
             <h2 className="text-xl font-bold ml-4">Error al cargar los datos...</h2>
@@ -45,7 +45,7 @@ export default function Promociones() {
 
     if (!promos.data) return (<Layout title="Tablero">
         <div className="flex flex-row items-center mb-2 mt-2">
-            <h1 className="text-2xl font-bold ml-4">Promociones</h1>
+            <h1 className="text-2xl font-bold ml-4">Lista de promociones</h1>
         </div>
         <div className="flex flex-row items-center mb-2 mt-2">
             <h2 className="text-xl font-bold ml-4">Cargando...</h2>
@@ -70,6 +70,7 @@ export default function Promociones() {
             let pizza = {
                 id: detalle.pizzaId._id,
                 nombre: detalle.pizzaId.nombre,
+                tamaño: detalle.pizzaId.tamano,
                 descripcion: detalle.pizzaId.descripcion,
                 precio: detalle.pizzaId.precio,
             }
@@ -107,6 +108,7 @@ export default function Promociones() {
                                         <TableRow>
                                             <TableCell>Codigo</TableCell>
                                             <TableCell>Nombre</TableCell>
+                                            <TableCell>Tamaño</TableCell>
                                             <TableCell>Descripcion</TableCell>
                                             <TableCell align="right">Precio ($)</TableCell>
                                         </TableRow>
@@ -116,6 +118,7 @@ export default function Promociones() {
                                             <TableRow key={historyRow.id}>
                                                 <TableCell component="th" scope="row">{historyRow.id}</TableCell>
                                                 <TableCell>{historyRow.nombre}</TableCell>
+                                                <TableCell>{historyRow.tamaño}</TableCell>
                                                 <TableCell>{historyRow.descripcion}</TableCell>
                                                 <TableCell align="right">{Math.round(historyRow.precio)}</TableCell>
                                             </TableRow>
