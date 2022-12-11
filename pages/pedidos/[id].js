@@ -30,11 +30,11 @@ export default function Detalles({ data }) {
                                 <div class="basis-1/2 rounded-xl border px-5 py-2 shadow-md w-full bg-white mb-2" key={index}>
                                     <div class="flex w-full items-center justify-between border-b pb-3">
                                         <div class="flex flex-col items-start">
-                                            <div class="text-lg font-bold text-slate-700">Monto Total: {pedido.pedido.montoTotal} Bs</div>
-                                            <div class="text-sm text-gray-500">Codigo: {pedido.pedido._id}</div>
+                                            <div class="text-lg font-bold text-slate-700">Monto Total: {pedido.pedido?.montoTotal} Bs</div>
+                                            <div class="text-sm text-gray-500">Codigo: {pedido.pedido?._id}</div>
                                         </div>
                                         <div class="flex items-center space-x-8">
-                                            <div class="text-xs  text-black ">{pedido.pedido.fecha}</div>
+                                            <div class="text-xs  text-black ">{pedido.pedido?.fecha}</div>
                                         </div>
                                     </div>
                                     <div class="mt-4 mb-1">
@@ -47,10 +47,10 @@ export default function Detalles({ data }) {
                                                         </div>
                                                         </div>
                                                         <div>
-                                                            <div class="font-bold text-lg">{detalle.pizzaId.nombre}</div>
+                                                            <div class="font-bold text-lg">{detalle.pizzaId?.nombre}</div>
                                                             <div class="text-xs text-gray-500">
-                                                                <span class="mr-2">Tamaño: {detalle.pizzaId.tamano}</span>
-                                                                <span class="mr-2">Precio: {detalle.pizzaId.precio}</span>
+                                                                <span class="mr-2">Tamaño: {detalle.pizzaId?.tamano}</span>
+                                                                <span class="mr-2">Precio: {detalle.pizzaId?.precio}</span>
                                                                 <span class="mr-2">Cantidad: {detalle.cantidad}</span>
                                                             </div>
                                                         </div>
