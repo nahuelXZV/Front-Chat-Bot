@@ -39,21 +39,21 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
                             </button> : ""}
                             {type === "contacto" ?
                                 (<Link href={`/contacto/${metadata.prospecto._id}`}>
-                                    <a className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full">
+                                    <button className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full">
                                         Detalles
-                                    </a>
+                                    </button>
                                 </Link>) : ""}
                             {type === "cliente" || type === "frecuente" ?
                                 (<Link href={`/pedidos/${metadata.cliente._id}`}>
-                                    <a className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full mr-2">
+                                    <button className="bg-blue-500 text-xs hover:bg-blue-700 text-white font-medium py-1 px-2 rounded-full mr-2">
                                         Pedidos
-                                    </a>
+                                    </button>
                                 </Link>) : ""}
                             {type === "frecuente" ?
                                 (<Link href={`/notificar/${metadata.cliente._id}`}>
-                                    <a className="bg-blue-500 text-xs hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-full">
+                                    <button className="bg-blue-500 text-xs hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-full">
                                         Notificaciones
-                                    </a>
+                                    </button>
                                 </Link>) : ""}
                         </div>
                         <div className="flex basis-1/2">

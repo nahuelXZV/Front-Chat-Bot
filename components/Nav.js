@@ -69,9 +69,9 @@ export default function Nav() {
         {/* Navbar left */}
         <div className="flex items-center">
           <Link href="/" className="lg:hidden">
-            <a className="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">
+            <button className="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">
               Pizzaria
-            </a>
+            </button>
           </Link>
           <button
             className="p-2 rounded-md focus:outline-none focus:ring text-gray-500"
@@ -101,10 +101,9 @@ export default function Nav() {
               <Image
                 src="/images/user.png"
                 alt="user"
-                layout="fill"
                 objectFit="cover"
-                width={20}
-                height={20}
+                width={50}
+                height={50}
               />
             </div>
             <h1 className="text-sm font-semibold text-gray-700">

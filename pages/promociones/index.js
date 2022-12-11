@@ -158,7 +158,7 @@ export default function Promociones() {
                 <div className="mb-7 flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Lista de promociones</h1>
                     <Link href="/promociones/nueva">
-                        <a className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Nueva promoción</a>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Nueva promoción</button>
                     </Link>
                 </div>
                 <TableContainer component={Paper}>

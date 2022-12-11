@@ -72,7 +72,7 @@ export default function SignUp() {
         </div>
         <div className="w-3/4 mt-4">
           <Link href="/login">
-            <a className="text-sm text-blue-500 font-bold hover:text-blue-700"> Tengo Cuenta</a>
+            <button className="text-sm text-blue-500 font-bold hover:text-blue-700"> Tengo Cuenta</button>
           </Link>
         </div>
       </div>

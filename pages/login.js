@@ -68,7 +68,7 @@ export default function Login() {
         <div className="w-3/4 mt-4">
           {/* texto de registrarse con LINK */}
           <Link href="/signup">
-            <a className="text-sm text-blue-500 font-bold hover:text-blue-700"> Registrarse</a>
+            <button className="text-sm text-blue-500 font-bold hover:text-blue-700"> Registrarse</button>
           </Link>
         </div>
       </div>
