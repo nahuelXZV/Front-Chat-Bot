@@ -50,9 +50,9 @@ export default function Card({ id, title, facebookId, data = [], tags, image, me
                                     </a>
                                 </Link>) : ""}
                             {type === "frecuente" ?
-                                (<Link href='/'>
-                                    <a className="bg-green-500 text-xs hover:bg-green-600 text-white font-medium py-1 px-2 rounded-full">
-                                        Notificar
+                                (<Link href={`/notificar/${metadata.cliente._id}`}>
+                                    <a className="bg-blue-500 text-xs hover:bg-blue-600 text-white font-medium py-1 px-2 rounded-full">
+                                        Notificaciones
                                     </a>
                                 </Link>) : ""}
                         </div>

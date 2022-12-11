@@ -79,6 +79,18 @@ export default function Promociones() {
         return { id, nombre, descripcion, fechaInicio, fechaFin, pizzas: listaPizzas, };
     }
 
+    function del(id) {
+        fetch('https://chat-bot-topicos.herokuapp.com/api/promociones/' + id, {
+            method: 'DELETE',
+        }).then((res) => {
+            if (res.status === 200 || res.status === 201) {
+                alert("Promoción eliminada correctamente");
+            } else {
+                alert("Error al eliminar la promoción");
+            }
+        })
+    }
+
     function Row(props) {
         const { row } = props;
         const [open, setOpen] = useState(false);
@@ -95,6 +107,12 @@ export default function Promociones() {
                     <TableCell>{row.descripcion}</TableCell>
                     <TableCell>{row.fechaInicio}</TableCell>
                     <TableCell>{row.fechaFin}</TableCell>
+                    <TableCell>
+                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={() => del(row.id)}>
+                            Eliminar
+                        </button>
+                    </TableCell>
                 </TableRow>
                 <TableRow>
                     <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -153,6 +171,7 @@ export default function Promociones() {
                                 <TableCell className="font-bold">Descripcion</TableCell>
                                 <TableCell className="font-bold">Inicio</TableCell>
                                 <TableCell className="font-bold">Fin</TableCell>
+                                <TableCell className="font-bold">Acciones</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>

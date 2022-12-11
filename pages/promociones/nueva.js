@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function Detalles({ data }) {
     const [pizzas, setPizzas] = useState(data);
     const [nombre, setNombre] = useState("");
-    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaInicio, setFechaInicio] = useState(new Date().toISOString().slice(0, 10));
     const [fechaFin, setFechaFin] = useState("");
     const [descripcion, setDescripcion] = useState("");
     const [detalles, setDetalles] = useState([]);
@@ -84,8 +84,8 @@ export default function Detalles({ data }) {
                                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                                         Fecha inicio*
                                     </label>
-                                    <input className="block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="fecha_inicio" type="date" placeholder="Fecha inicio"
-                                        onChange={(event) => { setFechaInicio(event.target.value) }} defaultValue={new Date().toISOString().slice(0, 10)} />
+                                    <input className="block w-full text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="fecha_inicio" type="date" placeholder="Fecha inicio" defaultValue={new Date().toISOString().slice(0, 10)}
+                                        onChange={(event) => { setFechaInicio(event.target.value) }} />
                                 </div>
                                 {/* fecha fin */}
                                 <div className="w-1/2 mx-2">
@@ -122,6 +122,11 @@ export default function Detalles({ data }) {
                         </div>
                         {/* boton de enviar */}
                         <div className="flex justify-center">
+                            <Link href="/promociones" >
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2" type="button">
+                                    Volver
+                                </button>
+                            </Link>
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="button" onClick={savePromocion}>
                                 Guardar promoción
                             </button>

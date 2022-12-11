@@ -71,7 +71,7 @@ export default function Detalles({ data }) {
 
 export async function getServerSideProps(context) {
     const { id } = context.query;
-    const url = "https://chat-bot-topicos.herokuapp.com/api/pedidos/cliente/" + id;
+    const url = "https://chat-bot-topicos.herokuapp.com/pedidos/cliente/" + id;
     // const token = "keyw3fjK3q3q8XsW2";
     const headers = {
         // Authorization: `Bearer ${token}`,
