@@ -21,7 +21,7 @@ export default function Detalles({ data }) {
                             <span className="ml-2">Volver</span>
                         </button>
                     </Link>
-                    <h1 className="text-2xl font-bold ml-6">Lista de pedidos de {pedidos[0].pedido?.clienteId?.nombre}</h1>
+                    <h1 className="text-2xl font-bold ml-6">Lista de pedidos de {pedidos[0]?.pedido?.clienteId?.nombre}</h1>
                 </div>
                 <div class='flex flex-col'>
                     {
