@@ -6,7 +6,7 @@ import { NextRequest } from 'next/server'
 export function middleware(request) {
     if (request.nextUrl.pathname.startsWith('/')) {
         const cookie = request.cookies.get('auth')
-        if (cookie.value == 'true') {
+        if (cookie?.value == 'true') {
             console.log('cookie true')
             return NextResponse.next()
         }
