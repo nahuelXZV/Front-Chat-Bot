@@ -14,7 +14,8 @@ const nextConfig = {
       "graph.facebook.com",
       "th.bing.com",
       'www.laespanolaaceites.com',
-      'placeralplato.com'
+      'placeralplato.com',
+      'st.depositphotos.com',
     ],
   },
 }
